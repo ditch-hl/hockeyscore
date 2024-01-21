@@ -1,6 +1,7 @@
 import pygame
 
-PERIOD_LENGTH = 5 * 60
+from config import PERIOD_LENGTH_IN_MINUTES
+
 
 class Game:
     def __init__(self):
@@ -14,7 +15,7 @@ class Game:
         self.new_game()
 
     def new_game(self):
-        self.game_time = PERIOD_LENGTH
+        self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
         self.home_score = 0
         self.visitor_score = 0
         self.period = 0

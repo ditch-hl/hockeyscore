@@ -17,7 +17,7 @@ DISPLAYSURF = pygame.display.set_mode(SCREEN_RESOLUTION)
 DISPLAYSURF.fill((255, 255, 255))
 pygame.display.set_caption("Hockey Scoreboard")
 
-background = pygame.image.load("G:\Development\HockeyScoreboard\ScoreboardTemplate.png")
+background = pygame.image.load(r"G:\Development\HockeyScoreboard\ScoreboardTemplate.png")
 DISPLAYSURF.blit(background, background.get_rect())
 
 game = Game()

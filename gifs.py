@@ -6,6 +6,7 @@ from PIL import GifImagePlugin
 
 GifImagePlugin.LOADING_STRATEGY = GifImagePlugin.LoadingStrategy.RGB_ALWAYS
 
+
 def convert_gif_to_spritesheet(gif_filepath):
     with Image.open(gif_filepath) as im:
         print(f"{im.n_frames} frames")
@@ -27,5 +28,5 @@ def convert_gif_to_spritesheet(gif_filepath):
 
 
 if __name__ == '__main__':
-    spritesheet = convertGifToSpritesheet(r"G:\Development\HockeyScoreboard\goal-hockey-goal.gif")
+    spritesheet = convert_gif_to_spritesheet(r"G:\Development\HockeyScoreboard\goal-hockey-goal.gif")
     print(spritesheet.name)

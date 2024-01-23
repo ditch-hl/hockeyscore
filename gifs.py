@@ -6,7 +6,7 @@ from PIL import GifImagePlugin
 
 GifImagePlugin.LOADING_STRATEGY = GifImagePlugin.LoadingStrategy.RGB_ALWAYS
 
-def convertGifToSpritesheet(gif_filepath):
+def convert_gif_to_spritesheet(gif_filepath):
     with Image.open(gif_filepath) as im:
         print(f"{im.n_frames} frames")
         print(f"Size is {im.size}")

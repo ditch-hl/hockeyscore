@@ -3,9 +3,11 @@ import sys
 import pygame.font
 from pygame.locals import *
 
+import gifs
 from config import GAME_TIME_POSITION, HOME_SCORE_POSITION, VISITOR_SCORE_POSITION, PERIOD_NUMBER_POSITION, \
     LCD_BACKGROUND_COLOR, SCREEN_RESOLUTION, LCD_TEXT_COLOR
 from game import Game
+from gifs import Animation
 
 pygame.init()
 pygame.font.init()
@@ -21,6 +23,11 @@ background = pygame.image.load(r"G:\Development\HockeyScoreboard\ScoreboardTempl
 DISPLAYSURF.blit(background, background.get_rect())
 
 game = Game()
+
+spritesheet_filename, gif_spritesheet = gifs.convert_gif_to_spritesheet(r"G:\Development\HockeyScoreboard\goal-hockey-goal.gif")
+animation = Animation(spritesheet_filename, gif_spritesheet)
+
+animation.start()
 
 while True:
     for event in pygame.event.get():
@@ -83,4 +90,9 @@ while True:
     period_rect.center = PERIOD_NUMBER_POSITION
     DISPLAYSURF.blit(period_surf, period_rect)
 
+    animation.draw((0, 0), DISPLAYSURF)
+    animation.tick()
+
     pygame.display.update()
+
+

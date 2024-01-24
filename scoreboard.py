@@ -24,7 +24,7 @@ DISPLAYSURF.blit(background, background.get_rect())
 
 game = Game()
 
-spritesheet_filename, gif_spritesheet = gifs.convert_gif_to_spritesheet(r"G:\Development\HockeyScoreboard\goal-hockey-goal.gif")
+spritesheet_filename, gif_spritesheet = gifs.convert_gif_to_spritesheet(r"G:\Development\HockeyScoreboard\zamboni.gif")
 animation = Animation(spritesheet_filename, gif_spritesheet)
 
 animation.start()
@@ -90,9 +90,7 @@ while True:
     period_rect.center = PERIOD_NUMBER_POSITION
     DISPLAYSURF.blit(period_surf, period_rect)
 
-    animation.draw((0, 0), DISPLAYSURF)
+    animation.draw(animation.centered_pos, DISPLAYSURF)
     animation.tick()
 
     pygame.display.update()
-
-

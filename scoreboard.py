@@ -12,22 +12,22 @@ from gifs import Animation
 pygame.init()
 pygame.font.init()
 
-time_font = pygame.font.Font(r"G:\Development\HockeyScoreboard\digital-7.monoitalic.ttf", size=111)
-count_font = pygame.font.Font(r"G:\Development\HockeyScoreboard\digital-7.monoitalic.ttf", size=150)
+time_font = pygame.font.Font(r"digital-7.monoitalic.ttf", size=111)
+count_font = pygame.font.Font(r"digital-7.monoitalic.ttf", size=150)
 
 DISPLAYSURF = pygame.display.set_mode(SCREEN_RESOLUTION)
 DISPLAYSURF.fill((255, 255, 255))
 pygame.display.set_caption("Hockey Scoreboard")
 
-background = pygame.image.load(r"G:\Development\HockeyScoreboard\ScoreboardTemplate.png")
+background = pygame.image.load(r"ScoreboardTemplate.png")
 DISPLAYSURF.blit(background, background.get_rect())
 
 game = Game()
 
-spritesheet_filename, gif_spritesheet = gifs.convert_gif_to_spritesheet(r"G:\Development\HockeyScoreboard\zamboni.gif")
-animation = Animation(spritesheet_filename, gif_spritesheet)
+#spritesheet_filename, gif_spritesheet = gifs.convert_gif_to_spritesheet(r"zamboni.gif")
+#animation = Animation(spritesheet_filename, gif_spritesheet)
 
-animation.start()
+#animation.start()
 
 while True:
     for event in pygame.event.get():
@@ -90,7 +90,7 @@ while True:
     period_rect.center = PERIOD_NUMBER_POSITION
     DISPLAYSURF.blit(period_surf, period_rect)
 
-    animation.draw(animation.centered_pos, DISPLAYSURF)
-    animation.tick()
+    #animation.draw(animation.centered_pos, DISPLAYSURF)
+    #animation.tick()
 
     pygame.display.update()

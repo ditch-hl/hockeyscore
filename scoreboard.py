@@ -18,6 +18,7 @@ count_font = pygame.font.Font(r"digital-7.monoitalic.ttf", size=150)
 DISPLAYSURF = pygame.display.set_mode(SCREEN_RESOLUTION)
 DISPLAYSURF.fill((255, 255, 255))
 pygame.display.set_caption("Hockey Scoreboard")
+pygame.display.toggle_fullscreen()
 
 background = pygame.image.load(r"ScoreboardTemplate.png")
 DISPLAYSURF.blit(background, background.get_rect())

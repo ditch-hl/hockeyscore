@@ -1,4 +1,5 @@
 import os.path
+import random
 import tempfile
 
 import pygame.time
@@ -71,6 +72,13 @@ class Animation:
         area = pygame.Rect(self.current_frame * self.size[0], 0, self.size[0], self.size[1])
         surf.blit(self.im, position, area=area)
 
+
+def pick_gif(gif_list: list[tuple[str, pygame.Surface]]):
+    if not gif_list:
+        return None
+
+    gif_path, gif_surf = gif_list[random.randrange(start=0,stop=len(gif_list))]
+    return Animation(gif_path, gif_surf)
 
 def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface]:
     with Image.open(gif_filepath) as im:

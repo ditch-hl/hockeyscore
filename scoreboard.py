@@ -16,7 +16,7 @@ time_font = pygame.font.Font(r"digital-7.monoitalic.ttf", size=111)
 count_font = pygame.font.Font(r"digital-7.monoitalic.ttf", size=150)
 
 DISPLAYSURF = pygame.display.set_mode(SCREEN_RESOLUTION)
-DISPLAYSURF.fill((255, 255, 255))
+DISPLAYSURF.fill((0, 0, 0))
 pygame.display.set_caption("Hockey Scoreboard")
 #pygame.display.toggle_fullscreen()
 
@@ -74,7 +74,7 @@ def draw_visitor_score():
 
 def draw_period():
     DISPLAYSURF.blit(period_background_surf, period_background_rect)
-    period_surf = count_font.render("2", False, LCD_TEXT_COLOR)
+    period_surf = count_font.render(str(game.period), False, LCD_TEXT_COLOR)
     period_rect = period_surf.get_rect()
     period_rect.center = PERIOD_NUMBER_POSITION
     DISPLAYSURF.blit(period_surf, period_rect)
@@ -88,6 +88,7 @@ while True:
 
     game.tick()
 
+    DISPLAYSURF.fill((0, 0, 0))
     if game.animation is None:
         # blit the background image
         DISPLAYSURF.blit(background, background.get_rect())

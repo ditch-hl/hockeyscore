@@ -2,6 +2,7 @@ from enum import Enum
 
 import pygame
 
+import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
 class GameState(Enum):
@@ -17,7 +18,7 @@ class Game:
         self.game_state = GameState.PREGAME
         self.home_score = 0
         self.visitor_score = 0
-        self.period = 0
+        self.period = 1
         self.last_tick = pygame.time.get_ticks()
         self.tick_accum = 0
         self.state_time = 0
@@ -27,10 +28,12 @@ class Game:
         self.new_game()
 
     def new_game(self):
-        self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
+        # TODO undo
+        #self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
+        self.game_time = 5
         self.home_score = 0
         self.visitor_score = 0
-        self.period = 0
+        self.period = 1
         self.state_time = 0
         self.game_state = GameState.PREGAME
         self.animation = None
@@ -52,14 +55,19 @@ class Game:
             if self.game_state == GameState.PLAYING:
                 self.game_time -= 1
                 if self.game_time == 0:
-                    self.period -= 1
-                    if self.period == 0:
+                    if self.period == 3:
                         self.game_state = GameState.GAME_OVER
-
                     else:
+                        self.period += 1
                         self.game_state = GameState.BETWEEN_PERIODS
+                        self.state_time = 10
+                        self.animation = gifs.pick_gif(self.gif_pack.between_periods)
             elif self.game_state in [GameState.GOAL, GameState.BETWEEN_PERIODS]:
                 self.state_time -= 1
                 if self.state_time == 0:
+                    if self.game_state == GameState.BETWEEN_PERIODS:
+                        self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
+                    self.animation = None
                     self.game_state = GameState.PLAYING
+
 

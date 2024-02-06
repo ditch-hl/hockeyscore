@@ -13,6 +13,30 @@ FRAMERATE = 20  # frames per second
 MS_PER_FRAME = 1000 / FRAMERATE
 
 
+class GifPack:
+    def __init__(self):
+        self.home_goal = []
+        self.visitor_goal = []
+        self.between_periods = []
+        self.game_over = []
+
+    def load_gifs(self):
+        self.home_goal = load_gifs_from_directory("gifs/home_goal")
+        self.visitor_goal = load_gifs_from_directory("gifs/visitor_goal")
+        self.between_periods = load_gifs_from_directory("gifs/between_periods")
+        self.game_over = load_gifs_from_directory("gifs/game_over")
+
+
+def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
+    result = []
+    for filepath in os.listdir(dir):
+        if filepath.lower().endswith(".gif"):
+            gif_filename, gif_surf = convert_gif_to_spritesheet(filepath)
+            result.append([gif_filename, gif_surf])
+
+    return result
+
+
 class Animation:
     def __init__(self, filename: str, im: pygame.Surface):
         self.im = im
@@ -23,7 +47,7 @@ class Animation:
         self.size = (self.im.get_size()[0] / self.n_frames, self.im.get_size()[1])
 
         self.centered_pos = (
-        config.SCREEN_RESOLUTION[0] / 2 - self.size[0] / 2, config.SCREEN_RESOLUTION[1] / 2 - self.size[1] / 2)
+            config.SCREEN_RESOLUTION[0] / 2 - self.size[0] / 2, config.SCREEN_RESOLUTION[1] / 2 - self.size[1] / 2)
 
     def reset(self):
         self.accum = 0

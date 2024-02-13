@@ -7,7 +7,7 @@ import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
 button = Button(4)
-button.hold_time(3)
+button.hold_time = 3
 
 class GameState(Enum):
     PREGAME = 1

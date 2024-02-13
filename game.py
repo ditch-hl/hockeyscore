@@ -6,7 +6,7 @@ import pygame
 import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
-button = Button(4, hold_type=3)
+button = Button(4, hold_time=3)
 
 
 class GameState(Enum):

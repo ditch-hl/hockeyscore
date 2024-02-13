@@ -7,7 +7,7 @@ import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
 button = Button(4, hold_time=3)
-home_score_pin = Button(2, pull_up=False)
+home_score_pin = Button(17, pull_up=False)
 
 
 class GameState(Enum):
@@ -36,10 +36,12 @@ class Game:
         self.new_game()
 
     def home_goal(self):
-        self.home_score += 1
+        if self.game_state == GameState.PLAYING:
+            self.home_score += 1
 
     def visitor_goal(self):
-        self.visitor_score += 1
+        if self.game_state == GameState.PLAYING:
+            self.visitor_score += 1
 
     def new_game(self):
         # TODO undo

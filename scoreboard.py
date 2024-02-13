@@ -7,7 +7,7 @@ from pygame.locals import *
 import gifs
 from config import GAME_TIME_POSITION, HOME_SCORE_POSITION, VISITOR_SCORE_POSITION, PERIOD_NUMBER_POSITION, \
     LCD_BACKGROUND_COLOR, SCREEN_RESOLUTION, LCD_TEXT_COLOR
-from game import Game, GameState
+from game import Game, GameState, button
 from gifs import Animation
 
 pygame.init()
@@ -35,6 +35,7 @@ background = pygame.image.load(r"ScoreboardTemplate.png")
 DISPLAYSURF.blit(background, background.get_rect())
 
 game = Game()
+button.when_held = lambda: game.new_game()
 game.game_state = GameState.PREGAME
 game.gif_pack = gifs.GifPack()
 game.gif_pack.load_gifs()

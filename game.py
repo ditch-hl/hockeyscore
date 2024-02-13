@@ -44,9 +44,7 @@ class Game:
             self.visitor_score += 1
 
     def new_game(self):
-        # TODO undo
-        # self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
-        self.game_time = 5
+        self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
         self.home_score = 0
         self.visitor_score = 0
         self.period = 1

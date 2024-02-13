@@ -6,9 +6,7 @@ import pygame
 import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
-button = Button(4)
-button.when_pressed = lambda: print("I am pressed!")
-button.when_released = lambda: print("I am released!")
+button = Button(4, hold_type=3)
 
 
 class GameState(Enum):

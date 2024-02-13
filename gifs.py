@@ -43,7 +43,8 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
 
 def clear_gifs():
     for filepath in os.listdir("./jpgs"):
-        os.remove(os.path.join("jpgs", filepath))
+        if filepath.lower().endswith("jpg"):
+            os.remove(os.path.join("jpgs", filepath))
 
 
 class Animation:

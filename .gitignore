@@ -1,2 +1,5 @@
-.gif
-*
+*.gif
+*.png
+*.ttf
+.idea/
+__pycache__/

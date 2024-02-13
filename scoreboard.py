@@ -35,7 +35,6 @@ background = pygame.image.load(r"ScoreboardTemplate.png")
 DISPLAYSURF.blit(background, background.get_rect())
 
 game = Game()
-button.when_held = lambda: game.new_game()
 game.game_state = GameState.PREGAME
 game.gif_pack = gifs.GifPack()
 game.gif_pack.load_gifs()

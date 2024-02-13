@@ -7,7 +7,9 @@ import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
 button = Button(4)
-button.hold_time = 3
+button.when_pressed = lambda: print("I am pressed!")
+button.when_released = lambda: print("I am released!")
+
 
 class GameState(Enum):
     PREGAME = 1
@@ -29,6 +31,7 @@ class Game:
         self.state_time = 0
         self.animation = None
         self.gif_pack = None
+        button.when_held = lambda: self.new_game()
 
         self.new_game()
 

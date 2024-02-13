@@ -7,6 +7,7 @@ import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
 button = Button(4, hold_time=3)
+home_score_pin = Button(2)
 
 
 class GameState(Enum):
@@ -30,8 +31,15 @@ class Game:
         self.animation = None
         self.gif_pack = None
         button.when_held = lambda: self.new_game()
+        home_score_pin.when_pressed = lambda: self.home_goal()
 
         self.new_game()
+
+    def home_goal(self):
+        self.home_score += 1
+
+    def visitor_goal(self):
+        self.visitor_score += 1
 
     def new_game(self):
         # TODO undo

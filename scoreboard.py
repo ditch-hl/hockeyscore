@@ -57,7 +57,7 @@ def draw_home_score():
     score_background_rect = score_background_surf.get_rect()
     score_background_rect.center = HOME_SCORE_POSITION
     DISPLAYSURF.blit(score_background_surf, score_background_rect)
-    home_score_surf = count_font.render("12", False, LCD_TEXT_COLOR)
+    home_score_surf = count_font.render(str(game.home_score), False, LCD_TEXT_COLOR)
     home_score_rect = home_score_surf.get_rect()
     home_score_rect.center = HOME_SCORE_POSITION
     DISPLAYSURF.blit(home_score_surf, home_score_rect)
@@ -67,7 +67,7 @@ def draw_visitor_score():
     score_background_rect = score_background_surf.get_rect()
     score_background_rect.center = VISITOR_SCORE_POSITION
     DISPLAYSURF.blit(score_background_surf, score_background_rect)
-    visitor_score_surf = count_font.render("09", False, LCD_TEXT_COLOR)
+    visitor_score_surf = count_font.render(str(game.visitor_score), False, LCD_TEXT_COLOR)
     visitor_score_rect = visitor_score_surf.get_rect()
     visitor_score_rect.center = VISITOR_SCORE_POSITION
     DISPLAYSURF.blit(visitor_score_surf, visitor_score_rect)

@@ -1,6 +1,7 @@
 import os.path
 import random
 import tempfile
+import json
 
 import pygame.time
 from PIL import GifImagePlugin
@@ -22,6 +23,8 @@ class GifPack:
         self.game_over = []
 
     def load_gifs(self):
+        clear_gifs()
+
         self.home_goal = load_gifs_from_directory("gifs/home_goal")
         self.visitor_goal = load_gifs_from_directory("gifs/visitor_goal")
         self.between_periods = load_gifs_from_directory("gifs/between_periods")
@@ -32,10 +35,15 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
     result = []
     for filepath in os.listdir(dir):
         if filepath.lower().endswith(".gif"):
-            gif_filename, gif_surf = convert_gif_to_spritesheet(filepath)
-            result.append([gif_filename, gif_surf])
+            gif_filename, gif_surf = convert_gif_to_spritesheet(os.path.join(dir, filepath))
+            result.append([os.path.join("jpgs", gif_filename), gif_surf])
 
     return result
+
+
+def clear_gifs():
+    for filepath in os.listdir("./jpgs"):
+        os.remove(os.path.join("jpgs", filepath))
 
 
 class Animation:
@@ -77,8 +85,9 @@ def pick_gif(gif_list: list[tuple[str, pygame.Surface]]):
     if not gif_list:
         return None
 
-    gif_path, gif_surf = gif_list[random.randrange(start=0,stop=len(gif_list))]
+    gif_path, gif_surf = gif_list[random.randrange(start=0, stop=len(gif_list))]
     return Animation(gif_path, gif_surf)
+
 
 def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface]:
     with Image.open(gif_filepath) as im:
@@ -104,19 +113,21 @@ def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface]:
             im.seek(frame)
             spritesheet.paste(im, (frame * im.size[0], 0))
 
-        with tempfile.NamedTemporaryFile(prefix=f"{im.n_frames}_", suffix=".jpg", delete_on_close=False,
-                                         dir=".") as outfile:
-            spritesheet = spritesheet.resize(
-                size=(int(im.size[0] * scale_factor * im.n_frames), int(im.size[1] * scale_factor)))
-            spritesheet.save(outfile)
-            filepath = outfile.file.name
-            with open(filepath, mode="rb") as infile:
-                spritesheet_im = pygame.image.load(infile)
-                _, tail = os.path.split(outfile.file.name)
+        outfile = tempfile.NamedTemporaryFile(prefix=f"{im.n_frames}_", suffix=".jpg", delete=False,
+                                              dir="./jpgs", mode="r+b")
+        spritesheet = spritesheet.resize(
+            size=(int(im.size[0] * scale_factor * im.n_frames), int(im.size[1] * scale_factor)))
+        spritesheet.save(outfile)
 
-                return tail, spritesheet_im
+        filepath = outfile.name
+        outfile.close()
+        print(filepath)
+        with open(filepath, mode="r+b") as infile:
+            spritesheet_im = pygame.image.load(infile)
+            _, tail = os.path.split(filepath)
 
+            return tail, spritesheet_im
 
-if __name__ == '__main__':
-    spritesheet = convert_gif_to_spritesheet(r"G:\Development\HockeyScoreboard\goal-hockey-goal.gif")
-    print(spritesheet.name)
+# if __name__ == '__main__':
+#    spritesheet = convert_gif_to_spritesheet(r"G:\Development\HockeyScoreboard\goal-hockey-goal.gif")
+#    print(spritesheet.name)

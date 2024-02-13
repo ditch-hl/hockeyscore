@@ -1,9 +1,12 @@
 from enum import Enum
 
+from gpiozero import Button
 import pygame
 
 import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
+
+button = Button(4)
 
 class GameState(Enum):
     PREGAME = 1
@@ -48,6 +51,10 @@ class Game:
         current_tick = pygame.time.get_ticks()
         self.tick_accum += current_tick - self.last_tick
         self.last_tick = current_tick
+
+        if self.game_state == GameState.PREGAME:
+            if button.is_pressed:
+                self.game_state = GameState.PLAYING
 
         if self.tick_accum >= 1000:
             self.tick_accum = 0

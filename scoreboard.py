@@ -1,6 +1,7 @@
 import sys
 
 import pygame.font
+from gpiozero import Button
 from pygame.locals import *
 
 import gifs
@@ -34,7 +35,7 @@ background = pygame.image.load(r"ScoreboardTemplate.png")
 DISPLAYSURF.blit(background, background.get_rect())
 
 game = Game()
-game.game_state = GameState.PLAYING
+game.game_state = GameState.PREGAME
 game.gif_pack = gifs.GifPack()
 game.gif_pack.load_gifs()
 
@@ -78,7 +79,6 @@ def draw_period():
     period_rect = period_surf.get_rect()
     period_rect.center = PERIOD_NUMBER_POSITION
     DISPLAYSURF.blit(period_surf, period_rect)
-
 
 while True:
     for event in pygame.event.get():

@@ -7,7 +7,7 @@ import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
 button = Button(4, hold_time=3)
-home_score_pin = Button(2)
+home_score_pin = Button(2, pull_up=True)
 
 
 class GameState(Enum):

@@ -52,7 +52,9 @@ class Animation:
         self.accum = 0
         self.last_tick = 0
         self.current_frame = 0
-        self.n_frames = int(filename[:filename.find("_")])
+
+        _, img_name = os.path.split(filename)
+        self.n_frames = int(img_name[:img_name.find("_")])
         self.size = (self.im.get_size()[0] / self.n_frames, self.im.get_size()[1])
 
         self.centered_pos = (

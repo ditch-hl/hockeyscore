@@ -30,6 +30,8 @@ class Game:
         self.animation = None
         self.gif_pack = None
 
+        button.when_held = self.new_game
+
         self.new_game()
 
     def new_game(self):
@@ -57,9 +59,6 @@ class Game:
         if self.game_state == GameState.PREGAME:
             if button.is_pressed:
                 self.game_state = GameState.PLAYING
-
-        if button.is_held:
-            self.new_game()
 
         if self.tick_accum >= 1000:
             self.tick_accum = 0

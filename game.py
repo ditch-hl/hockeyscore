@@ -7,6 +7,7 @@ import gifs
 from config import PERIOD_LENGTH_IN_MINUTES
 
 button = Button(4)
+button.hold_time(3)
 
 class GameState(Enum):
     PREGAME = 1
@@ -14,6 +15,7 @@ class GameState(Enum):
     BETWEEN_PERIODS = 3
     GOAL = 4
     GAME_OVER = 5
+
 
 class Game:
     def __init__(self):
@@ -32,7 +34,7 @@ class Game:
 
     def new_game(self):
         # TODO undo
-        #self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
+        # self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
         self.game_time = 5
         self.home_score = 0
         self.visitor_score = 0
@@ -56,6 +58,9 @@ class Game:
             if button.is_pressed:
                 self.game_state = GameState.PLAYING
 
+        if button.is_held:
+            self.new_game()
+
         if self.tick_accum >= 1000:
             self.tick_accum = 0
 
@@ -76,5 +81,3 @@ class Game:
                         self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
                     self.animation = None
                     self.game_state = GameState.PLAYING
-
-

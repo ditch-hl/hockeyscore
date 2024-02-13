@@ -30,7 +30,7 @@ class Game:
         self.animation = None
         self.gif_pack = None
 
-        button.when_held = self.new_game
+        button.when_held = lambda _: self.new_game
 
         self.new_game()
 

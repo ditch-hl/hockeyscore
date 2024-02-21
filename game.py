@@ -33,9 +33,22 @@ class Game:
         self.animation = None
         self.gif_pack = None
         button.when_held = lambda: self.new_game()
+        button.when_pressed = lambda: self.handle_button_press()
         home_score_pin.when_pressed = lambda: self.home_goal()
 
         self.new_game()
+
+    def handle_button_press(self):
+        if self.game_state == GameState.PREGAME:
+            self.game_state = GameState.PLAYING
+        elif self.game_state == GameState.PLAYING:
+            self.game_state = GameState.PAUSED
+        elif self.game_state == GameState.PAUSED:
+            self.game_state = GameState.PLAYING
+        elif self.game_state == GameState.BETWEEN_PERIODS:
+            self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
+            self.animation = None
+            self.game_state = GameState.PLAYING
 
     def home_goal(self):
         if self.game_state == GameState.PLAYING:
@@ -68,17 +81,6 @@ class Game:
         self.tick_accum += current_tick - self.last_tick
         self.last_tick = current_tick
 
-        if button.is_pressed:
-            if self.game_state == GameState.PREGAME:
-                self.game_state = GameState.PLAYING
-            elif self.game_state == GameState.PLAYING:
-                self.game_state = GameState.PAUSED
-            elif self.game_state == GameState.PAUSED:
-                self.game_state = GameState.PLAYING
-            elif self.game_state == GameState.BETWEEN_PERIODS:
-                self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
-                self.animation = None
-                self.game_state = GameState.PLAYING
 
         if self.tick_accum >= 1000:
             self.blinker = not self.blinker

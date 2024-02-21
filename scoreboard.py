@@ -1,14 +1,12 @@
 import sys
 
 import pygame.font
-from gpiozero import Button
 from pygame.locals import *
 
 import gifs
 from config import GAME_TIME_POSITION, HOME_SCORE_POSITION, VISITOR_SCORE_POSITION, PERIOD_NUMBER_POSITION, \
     LCD_BACKGROUND_COLOR, SCREEN_RESOLUTION, LCD_TEXT_COLOR
-from game import Game, GameState, button
-from gifs import Animation
+from game import Game, GameState
 
 pygame.init()
 pygame.font.init()
@@ -19,7 +17,7 @@ count_font = pygame.font.Font(r"digital-7.monoitalic.ttf", size=150)
 DISPLAYSURF = pygame.display.set_mode(SCREEN_RESOLUTION)
 DISPLAYSURF.fill((0, 0, 0))
 pygame.display.set_caption("Hockey Scoreboard")
-#pygame.display.toggle_fullscreen()
+pygame.display.toggle_fullscreen()
 
 # Reusable surfaces
 score_background_surf = count_font.render("00", False, LCD_BACKGROUND_COLOR, (0, 0, 0))
@@ -39,13 +37,13 @@ game.game_state = GameState.PREGAME
 game.gif_pack = gifs.GifPack()
 game.gif_pack.load_gifs()
 
-# spritesheet_filename, gif_spritesheet = gifs.convert_gif_to_spritesheet(r"zamboni.gif")
-# animation = Animation(spritesheet_filename, gif_spritesheet)
-
-# animation.start()
 
 def draw_game_time():
     DISPLAYSURF.blit(game_time_background_surf, game_time_background_rect)
+
+    # blink the game time when paused
+    if game.game_state == GameState.PAUSED and not game.blinker:
+        return
 
     game_time = time_font.render(game.get_time_readout(), False, LCD_TEXT_COLOR)
     game_time_rect = game_time.get_rect()
@@ -79,6 +77,7 @@ def draw_period():
     period_rect = period_surf.get_rect()
     period_rect.center = PERIOD_NUMBER_POSITION
     DISPLAYSURF.blit(period_surf, period_rect)
+
 
 while True:
     for event in pygame.event.get():

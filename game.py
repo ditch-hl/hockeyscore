@@ -7,14 +7,15 @@ import gifs
 from config import PERIOD_LENGTH_IN_MINUTES, DELAY_AFTER_GOAL_IN_SECONDS
 
 button = Button(4, hold_time=3)
+
 home_score_pin = Button(17, pull_up=False)
 visitor_score_pin = Button(27, pull_up=False)
 
-home_score_up_pin = Button(14, pull_up=False)
-home_score_down_pin = Button(15, pull_up=False)
+home_score_up_pin = Button(14)
+home_score_down_pin = Button(15)
 
-visitor_score_up_pin = Button(8, pull_up=False)
-visitor_score_down_pin = Button(7, pull_up=False)
+visitor_score_up_pin = Button(8)
+visitor_score_down_pin = Button(7)
 
 
 class GameState(Enum):

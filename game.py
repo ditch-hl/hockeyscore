@@ -10,6 +10,12 @@ button = Button(4, hold_time=3)
 home_score_pin = Button(17, pull_up=False)
 visitor_score_pin = Button(27, pull_up=False)
 
+home_score_up_pin = Button(14, pull_up=False)
+home_score_down_pin = Button(15, pull_up=False)
+
+visitor_score_up_pin = Button(8, pull_up=False)
+visitor_score_down_pin = Button(7, pull_up=False)
+
 
 class GameState(Enum):
     PREGAME = 1
@@ -33,12 +39,26 @@ class Game:
         self.state_time = 0
         self.animation = None
         self.gif_pack = None
+
         button.when_held = lambda: self.new_game()
         button.when_pressed = lambda: self.handle_button_press()
+
         home_score_pin.when_pressed = lambda: self.home_goal()
         visitor_score_pin.when_pressed = lambda: self.visitor_goal()
 
+        home_score_down_pin.when_pressed = lambda: self.adjust_home_score(-1)
+        home_score_up_pin.when_pressed = lambda: self.adjust_home_score(1)
+
+        visitor_score_down_pin.when_pressed = lambda: self.adjust_visitor_score(-1)
+        visitor_score_up_pin.when_pressed = lambda: self.adjust_visitor_score(1)
+
         self.new_game()
+
+    def adjust_home_score(self, dx):
+        self.home_score += dx
+
+    def adjust_visitor_score(self, dx):
+        self.visitor_score += dx
 
     def handle_button_press(self):
         if self.game_state == GameState.PREGAME:

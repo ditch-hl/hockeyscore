@@ -56,10 +56,10 @@ class Game:
         self.new_game()
 
     def adjust_home_score(self, dx):
-        self.home_score += dx
+        self.home_score = max(0, self.home_score + dx)
 
     def adjust_visitor_score(self, dx):
-        self.visitor_score += dx
+        self.visitor_score = max(0, self.visitor_score + dx)
 
     def handle_button_press(self):
         if self.game_state == GameState.PREGAME:

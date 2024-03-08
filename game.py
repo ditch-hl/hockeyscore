@@ -36,6 +36,7 @@ class Game:
         button.when_held = lambda: self.new_game()
         button.when_pressed = lambda: self.handle_button_press()
         home_score_pin.when_pressed = lambda: self.home_goal()
+        visitor_score_pin.when_pressed = lambda: self.visitor_goal()
 
         self.new_game()
 

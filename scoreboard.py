@@ -14,7 +14,7 @@ pygame.font.init()
 time_font = pygame.font.Font(r"digital-7.monoitalic.ttf", size=111)
 count_font = pygame.font.Font(r"digital-7.monoitalic.ttf", size=150)
 
-DISPLAYSURF = pygame.display.set_mode(SCREEN_RESOLUTION)
+DISPLAYSURF = pygame.display.set_mode(SCREEN_RESOLUTION, vsync=1, flags=pygame.SCALED)
 DISPLAYSURF.fill((0, 0, 0))
 pygame.display.set_caption("Hockey Scoreboard")
 #pygame.display.toggle_fullscreen()
@@ -101,4 +101,4 @@ while True:
         game.animation.draw(game.animation.centered_pos, DISPLAYSURF)
         game.animation.tick()
 
-    pygame.display.update()
+    pygame.display.flip()

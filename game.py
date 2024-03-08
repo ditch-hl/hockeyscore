@@ -4,10 +4,11 @@ import pygame
 from gpiozero import Button
 
 import gifs
-from config import PERIOD_LENGTH_IN_MINUTES
+from config import PERIOD_LENGTH_IN_MINUTES, DELAY_AFTER_GOAL_IN_SECONDS
 
 button = Button(4, hold_time=3)
 home_score_pin = Button(17, pull_up=False)
+visitor_score_pin = Button(27, pull_up=False)
 
 
 class GameState(Enum):
@@ -53,10 +54,16 @@ class Game:
     def home_goal(self):
         if self.game_state == GameState.PLAYING:
             self.home_score += 1
+            self.game_state = GameState.GOAL
+            self.animation = gifs.pick_gif(self.gif_pack.home_goal)
+            self.state_time = DELAY_AFTER_GOAL_IN_SECONDS
 
     def visitor_goal(self):
         if self.game_state == GameState.PLAYING:
             self.visitor_score += 1
+            self.game_state = GameState.GOAL
+            self.animation = gifs.pick_gif(self.gif_pack.visitor_goal)
+            self.state_time = DELAY_AFTER_GOAL_IN_SECONDS
 
     def new_game(self):
         self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
@@ -80,7 +87,6 @@ class Game:
         current_tick = pygame.time.get_ticks()
         self.tick_accum += current_tick - self.last_tick
         self.last_tick = current_tick
-
 
         if self.tick_accum >= 1000:
             self.blinker = not self.blinker

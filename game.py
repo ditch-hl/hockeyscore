@@ -11,14 +11,14 @@ button = Button(4, hold_time=3)
 home_score_pin = Button(27, pull_up=False)
 visitor_score_pin = Button(17, pull_up=False)
 
-home_score_up_pin = Button(14, bounce_time=DEBOUNCE_TIME)
-home_score_down_pin = Button(15, bounce_time=DEBOUNCE_TIME)
+home_score_up_pin = Button(7, bounce_time=DEBOUNCE_TIME)
+home_score_down_pin = Button(8, bounce_time=DEBOUNCE_TIME)
 
-visitor_score_up_pin = Button(7, bounce_time=DEBOUNCE_TIME)
-visitor_score_down_pin = Button(8, bounce_time=DEBOUNCE_TIME)
+visitor_score_up_pin = Button(15, bounce_time=DEBOUNCE_TIME)
+visitor_score_down_pin = Button(14, bounce_time=DEBOUNCE_TIME)
 
-game_time_up_pin = Button(6, bounce_time=DEBOUNCE_TIME)
-game_time_down_pin = Button(5, bounce_time=DEBOUNCE_TIME)
+game_time_up_pin = Button(5, bounce_time=DEBOUNCE_TIME)
+game_time_down_pin = Button(6, bounce_time=DEBOUNCE_TIME)
 
 
 class GameState(Enum):

@@ -6,16 +6,19 @@ from gpiozero import Button
 import gifs
 from config import PERIOD_LENGTH_IN_MINUTES, DELAY_AFTER_GOAL_IN_SECONDS
 
-button = Button(4, hold_time=3)
+button = Button(4, hold_time=3, bounce_time=0.25)
 
-home_score_pin = Button(17, pull_up=False)
-visitor_score_pin = Button(27, pull_up=False)
+home_score_pin = Button(27, pull_up=False)
+visitor_score_pin = Button(17, pull_up=False)
 
-home_score_up_pin = Button(14)
-home_score_down_pin = Button(15)
+home_score_up_pin = Button(14, bounce_time=0.25)
+home_score_down_pin = Button(15, bounce_time=0.25)
 
-visitor_score_up_pin = Button(8)
-visitor_score_down_pin = Button(7)
+visitor_score_up_pin = Button(8, bounce_time=0.25)
+visitor_score_down_pin = Button(7, bounce_time=0.25)
+
+game_time_up_pin = Button(5, bounce_time=0.25)
+game_time_down_pin = Button(6, bounce_time=0.25)
 
 
 class GameState(Enum):
@@ -53,6 +56,9 @@ class Game:
         visitor_score_down_pin.when_pressed = lambda: self.adjust_visitor_score(-1)
         visitor_score_up_pin.when_pressed = lambda: self.adjust_visitor_score(1)
 
+        game_time_down_pin.when_pressed = lambda: self.adjust_game_time(-1)
+        game_time_up_pin.when_pressed = lambda: self.adjust_game_time(1)
+
         self.new_game()
 
     def adjust_home_score(self, dx):
@@ -60,6 +66,10 @@ class Game:
 
     def adjust_visitor_score(self, dx):
         self.visitor_score = max(0, self.visitor_score + dx)
+
+    def adjust_game_time(self, dx):
+        if self.game_state in [GameState.PLAYING, GameState.PAUSED]:
+            self.game_time = max(0, self.game_time + dx)
 
     def handle_button_press(self):
         if self.game_state == GameState.PREGAME:

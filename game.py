@@ -6,7 +6,7 @@ from gpiozero import Button
 import gifs
 from config import PERIOD_LENGTH_IN_MINUTES, DELAY_AFTER_GOAL_IN_SECONDS
 
-button = Button(4, hold_time=3, bounce_time=0.25)
+button = Button(4, hold_time=3)
 
 home_score_pin = Button(27, pull_up=False)
 visitor_score_pin = Button(17, pull_up=False)

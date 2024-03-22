@@ -125,8 +125,7 @@ def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface]:
             im.seek(frame)
             spritesheet.paste(im, (frame * im.size[0], 0))
 
-        outfile = tempfile.NamedTemporaryFile(prefix=f"{im.n_frames}_", suffix=".jpg", delete=False,
-                                              dir="./jpgs", mode="r+b")
+        outfile = open(f'./jpgs/{gif_filepath[:gif_filepath.rindex(".")]}.jpg', "r+b")
         spritesheet = spritesheet.resize(
             size=(int(im.size[0] * scale_factor * im.n_frames), int(im.size[1] * scale_factor)))
         spritesheet.save(outfile)

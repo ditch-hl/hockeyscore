@@ -47,7 +47,7 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
             else:
                 print(f"Found existing gif spritesheet: {jpg_filepath}")
                 gif_surf = pygame.image.load(jpg_filepath)
-                result.append((os.path.join("jpgs", jpg_filepath), gif_surf))
+                result.append((jpg_filepath, gif_surf))
 
     return result
 

@@ -40,7 +40,7 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
     for filepath in os.listdir(dir):
         if filepath.lower().endswith(".gif"):
             jpg_filepath = f'{filepath[:filepath.rindex(".")]}.jpg'
-            if not os.path.exists(jpg_filepath):
+            if not os.path.exists(os.path.join(".jpgs", jpg_filepath)):
                 print(f"Generating new gif spritesheet: {jpg_filepath}")
                 jpg_filepath, gif_surf = convert_gif_to_spritesheet(os.path.join(dir, filepath))
                 result.append((os.path.join("jpgs", jpg_filepath), gif_surf))

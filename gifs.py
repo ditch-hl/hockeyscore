@@ -22,27 +22,37 @@ class GifPack:
         self.game_over = []
 
     def load_gifs(self):
-        clear_gifs()
-
         self.home_goal = load_gifs_from_directory("gifs/home_goal")
         self.visitor_goal = load_gifs_from_directory("gifs/visitor_goal")
         self.between_periods = load_gifs_from_directory("gifs/between_periods")
         self.game_over = load_gifs_from_directory("gifs/game_over")
 
+        loaded_gif_paths = [path for path, surf in self.home_goal]
+        loaded_gif_paths.extend([path for path, surf in self.visitor_goal])
+        loaded_gif_paths.extend([path for path, surf in self.between_periods])
+        loaded_gif_paths.extend([path for path, surf in self.game_over])
 
-def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
-    result = []
+        clear_gifs(loaded_gif_paths)
+
+
+def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface | pygame.SurfaceType]]:
+    result: list[tuple[str, pygame.Surface | pygame.SurfaceType]] = []
     for filepath in os.listdir(dir):
         if filepath.lower().endswith(".gif"):
-            gif_filename, gif_surf = convert_gif_to_spritesheet(os.path.join(dir, filepath))
-            result.append([os.path.join("jpgs", gif_filename), gif_surf])
+            jpg_filepath = os.path.join(filepath[:filepath.rindex(".")], ".jpg")
+            if not os.path.exists(jpg_filepath):
+                jpg_filepath, gif_surf = convert_gif_to_spritesheet(os.path.join(dir, filepath))
+                result.append((os.path.join("jpgs", jpg_filepath), gif_surf))
+            else:
+                gif_surf = pygame.image.load(jpg_filepath)
+                result.append((os.path.join("jpgs", jpg_filepath), gif_surf))
 
     return result
 
 
-def clear_gifs():
+def clear_gifs(loaded_gifs: list[str]):
     for filepath in os.listdir("./jpgs"):
-        if filepath.lower().endswith("jpg"):
+        if filepath.lower().endswith("jpg") and filepath not in loaded_gifs:
             os.remove(os.path.join("jpgs", filepath))
 
 
@@ -91,7 +101,7 @@ def pick_gif(gif_list: list[tuple[str, pygame.Surface]]):
     return Animation(gif_path, gif_surf)
 
 
-def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface]:
+def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface | pygame.SurfaceType]:
     with Image.open(gif_filepath) as im:
         print(f"{im.n_frames} frames")
         print(f"Size is {im.size}")

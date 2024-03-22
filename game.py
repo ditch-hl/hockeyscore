@@ -82,6 +82,8 @@ class Game:
             self.game_time = PERIOD_LENGTH_IN_MINUTES * 60
             self.animation = None
             self.game_state = GameState.PLAYING
+        elif self.game_state == GameState.GAME_OVER:
+            self.new_game()
 
     def home_goal(self):
         if self.game_state == GameState.PLAYING:

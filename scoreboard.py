@@ -30,6 +30,7 @@ period_background_rect = period_background_surf.get_rect()
 period_background_rect.center = PERIOD_NUMBER_POSITION
 
 background = pygame.image.load(r"ScoreboardTemplate.png")
+game_over_background = pygame.image.load(r"FinalScoreTemplate.png")
 DISPLAYSURF.blit(background, background.get_rect())
 
 game = Game()
@@ -90,7 +91,10 @@ while True:
     DISPLAYSURF.fill((0, 0, 0))
     if game.animation is None:
         # blit the background image
-        DISPLAYSURF.blit(background, background.get_rect())
+        if game.game_state != GameState.GAME_OVER:
+            DISPLAYSURF.blit(background, background.get_rect())
+        else:
+            DISPLAYSURF.blit(game_over_background, game_over_background.get_rect())
 
         # draw the various readouts
         draw_game_time()

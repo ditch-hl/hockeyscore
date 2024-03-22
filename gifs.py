@@ -41,9 +41,11 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
         if filepath.lower().endswith(".gif"):
             jpg_filepath = os.path.join(filepath[:filepath.rindex(".")], ".jpg")
             if not os.path.exists(jpg_filepath):
+                print(f"Generating new gif spritesheet: {jpg_filepath}")
                 jpg_filepath, gif_surf = convert_gif_to_spritesheet(os.path.join(dir, filepath))
                 result.append((os.path.join("jpgs", jpg_filepath), gif_surf))
             else:
+                print(f"Found existing gif spritesheet: {jpg_filepath}")
                 gif_surf = pygame.image.load(jpg_filepath)
                 result.append((os.path.join("jpgs", jpg_filepath), gif_surf))
 
@@ -53,6 +55,7 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
 def clear_gifs(loaded_gifs: list[str]):
     for filepath in os.listdir("./jpgs"):
         if filepath.lower().endswith("jpg") and filepath not in loaded_gifs:
+            print(f"Removing unneeded gif spritesheet: {filepath}\n")
             os.remove(os.path.join("jpgs", filepath))
 
 

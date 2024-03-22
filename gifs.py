@@ -127,7 +127,7 @@ def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface]:
 
         _, gif_tail = os.path.split(gif_filepath)
 
-        outfile = open(f'./jpgs/{gif_tail[:gif_tail.rindex(".")]}.jpg', "r+b")
+        outfile = open(f'./jpgs/{gif_tail[:gif_tail.rindex(".")]}.jpg', "w+b")
         spritesheet = spritesheet.resize(
             size=(int(im.size[0] * scale_factor * im.n_frames), int(im.size[1] * scale_factor)))
         spritesheet.save(outfile)

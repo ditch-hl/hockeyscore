@@ -101,7 +101,7 @@ def pick_gif(gif_list: list[tuple[str, pygame.Surface]]):
     return Animation(gif_path, gif_surf)
 
 
-def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface | pygame.SurfaceType]:
+def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface]:
     with Image.open(gif_filepath) as im:
         print(f"{im.n_frames} frames")
         print(f"Size is {im.size}")

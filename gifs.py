@@ -55,9 +55,10 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
 def clear_gifs(loaded_gifs: list[str]):
     print(loaded_gifs)
     for filepath in os.listdir("./jpgs"):
-        if filepath.lower().endswith("jpg") and filepath not in loaded_gifs:
-            print(f"Removing unneeded gif spritesheet: {filepath}\n")
-            os.remove(filepath)
+        full_path = os.path.join("./jpgs", filepath)
+        if filepath.lower().endswith("jpg") and full_path not in loaded_gifs:
+            print(f"Removing unneeded gif spritesheet: {full_path}\n")
+            os.remove(full_path)
 
 
 class Animation:

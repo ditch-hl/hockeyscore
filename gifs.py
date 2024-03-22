@@ -35,7 +35,7 @@ class GifPack:
         clear_gifs(loaded_gif_paths)
 
 
-def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface | pygame.SurfaceType]]:
+def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
     result: list[tuple[str, pygame.Surface | pygame.SurfaceType]] = []
     for filepath in os.listdir(dir):
         if filepath.lower().endswith(".gif"):

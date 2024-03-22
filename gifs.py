@@ -39,7 +39,8 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
     result: list[tuple[str, pygame.Surface | pygame.SurfaceType]] = []
     for filepath in os.listdir(dir):
         if filepath.lower().endswith(".gif"):
-            jpg_filepath = os.path.join("./jpgs", f'{filepath[:filepath.rindex(".")]}.jpg')
+            gif_im = Image.open(filepath)
+            jpg_filepath = os.path.join("./jpgs", f'{gif_im.n_frames}_{filepath[:filepath.rindex(".")]}.jpg')
             if not os.path.exists(jpg_filepath):
                 print(f"Generating new gif spritesheet: {jpg_filepath}")
                 jpg_filepath, gif_surf = convert_gif_to_spritesheet(os.path.join(dir, filepath))
@@ -53,7 +54,6 @@ def load_gifs_from_directory(dir) -> list[tuple[str, pygame.Surface]]:
 
 
 def clear_gifs(loaded_gifs: list[str]):
-    print(loaded_gifs)
     for filepath in os.listdir("./jpgs"):
         full_path = os.path.join("./jpgs", filepath)
         if filepath.lower().endswith("jpg") and full_path not in loaded_gifs:
@@ -132,7 +132,7 @@ def convert_gif_to_spritesheet(gif_filepath: str) -> [str, pygame.Surface]:
 
         _, gif_tail = os.path.split(gif_filepath)
 
-        outfile = open(f'./jpgs/{gif_tail[:gif_tail.rindex(".")]}.jpg', "w+b")
+        outfile = open(f'./jpgs/{im.n_frames}_{gif_tail[:gif_tail.rindex(".")]}.jpg', "w+b")
         spritesheet = spritesheet.resize(
             size=(int(im.size[0] * scale_factor * im.n_frames), int(im.size[1] * scale_factor)))
         spritesheet.save(outfile)

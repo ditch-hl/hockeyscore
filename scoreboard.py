@@ -93,14 +93,14 @@ while True:
         # blit the background image
         if game.game_state != GameState.GAME_OVER:
             DISPLAYSURF.blit(background, background.get_rect())
+            draw_game_time()
+            draw_period()
         else:
             DISPLAYSURF.blit(game_over_background, game_over_background.get_rect())
 
-        # draw the various readouts
-        draw_game_time()
         draw_home_score()
         draw_visitor_score()
-        draw_period()
+
     else:
         game.animation.draw(game.animation.centered_pos, DISPLAYSURF)
         game.animation.tick()

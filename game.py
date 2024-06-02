@@ -130,7 +130,7 @@ class Game:
             self.blinker = not self.blinker
             self.tick_accum = 0
 
-            if self.game_state == GameState.PLAYING:
+            if self.game_state == GameState.PLAYING and not self.is_overtime:
                 self.game_time -= 1
                 if self.game_time == 0:
                     if self.period == 3:

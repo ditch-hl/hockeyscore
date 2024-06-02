@@ -1,6 +1,5 @@
 import os.path
 import random
-import tempfile
 
 import pygame.time
 from PIL import GifImagePlugin

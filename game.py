@@ -40,6 +40,7 @@ class Game:
         self.last_tick = pygame.time.get_ticks()
         self.tick_accum = 0
         self.blinker = False
+        self.is_overtime = False
         self.state_time = 0
         self.animation = None
         self.gif_pack = None
@@ -106,9 +107,12 @@ class Game:
         self.period = 1
         self.state_time = 0
         self.game_state = GameState.PREGAME
+        self.is_overtime = False
         self.animation = None
 
     def get_time_readout(self):
+        if self.is_overtime:
+            return 'OT:OT'
         minutes = int(self.game_time / 60)
         seconds = self.game_time % 60
 
@@ -130,7 +134,10 @@ class Game:
                 self.game_time -= 1
                 if self.game_time == 0:
                     if self.period == 3:
-                        self.game_state = GameState.GAME_OVER
+                        if self.home_score != self.visitor_score:
+                            self.game_state = GameState.GAME_OVER
+                        else:
+                            self.is_overtime = True
                     else:
                         self.period += 1
                         self.game_state = GameState.BETWEEN_PERIODS
@@ -140,4 +147,7 @@ class Game:
                 self.state_time -= 1
                 if self.state_time == 0:
                     self.animation = None
-                    self.game_state = GameState.PLAYING
+                    if not self.is_overtime:
+                        self.game_state = GameState.PLAYING
+                    else:
+                        self.game_state = GameState.GAME_OVER

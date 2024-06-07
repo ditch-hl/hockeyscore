@@ -86,6 +86,12 @@ while True:
             pygame.quit()
             sys.exit()
 
+        if event.type == pygame.KEYDOWN:
+            # checking if key "q" was pressed for Quit
+            if event.key == pygame.K_q:
+                pygame.quit()
+                sys.exit()
+
     game.tick()
 
     DISPLAYSURF.fill((0, 0, 0))
